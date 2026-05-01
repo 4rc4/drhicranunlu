@@ -256,28 +256,39 @@
           <h2 id="results-title">Uygulama örnekleri</h2>
           <p>Öne çıkan uygulama sonuçları sade ve karşılaştırması kolay bir düzenle sunuluyor.</p>
         </div>
-        <div class="result-grid">
-          <article class="result-card reveal">
-            <img
-              src="https://www.drhicranunlu.com/wp-content/uploads/2024/03/once1.jpg"
-              alt="Dudak dolgusu öncesi ve sonrası örnek görseli"
+        <div class="before-after-tabs reveal" role="tablist" aria-label="Öncesi ve sonrası örnekleri">
+          <button class="before-after-tab active" type="button" data-comparison="dudak-dolgusu">Dudak Dolgusu</button>
+          <button class="before-after-tab" type="button" data-comparison="kirisiklik">Cilt Kırışıklıklarına Son</button>
+          <button class="before-after-tab" type="button" data-comparison="leke">Cilt Lekelerine Son</button>
+        </div>
+        <div class="before-after-shell reveal">
+          <aside class="before-after-side">
+            <span>before</span>
+            <strong>procedures</strong>
+          </aside>
+          <figure class="comparison" id="comparisonSlider">
+            <img class="comparison-after" id="comparisonAfter" src="" alt="" draggable="false" />
+            <div class="comparison-before-wrap" id="comparisonBeforeWrap">
+              <img class="comparison-before" id="comparisonBefore" src="" alt="" draggable="false" />
+            </div>
+            <input
+              class="comparison-range"
+              id="comparisonRange"
+              type="range"
+              min="0"
+              max="100"
+              value="50"
+              aria-label="Öncesi sonrası karşılaştırma oranı"
             />
-            <h3>Dudak Dolgusu</h3>
-          </article>
-          <article class="result-card reveal">
-            <img
-              src="https://www.drhicranunlu.com/wp-content/uploads/2018/11/03_before.jpg"
-              alt="Cilt kırışıklıkları öncesi ve sonrası örnek görseli"
-            />
-            <h3>Cilt Kırışıklıklarına Son</h3>
-          </article>
-          <article class="result-card reveal">
-            <img
-              src="https://www.drhicranunlu.com/wp-content/uploads/2024/03/oncesi.jpg"
-              alt="Cilt lekeleri öncesi ve sonrası örnek görseli"
-            />
-            <h3>Cilt Lekelerine Son</h3>
-          </article>
+            <div class="comparison-handle" id="comparisonHandle" aria-hidden="true">
+              <i data-lucide="chevrons-left-right"></i>
+            </div>
+            <figcaption id="comparisonCaption">Dudak Dolgusu</figcaption>
+          </figure>
+          <aside class="before-after-side after-label">
+            <span>after</span>
+            <strong>procedures</strong>
+          </aside>
         </div>
       </section>
 

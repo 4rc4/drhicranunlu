@@ -170,10 +170,35 @@ const services = [
   }
 ];
 
+const comparisons = {
+  "dudak-dolgusu": {
+    title: "Dudak Dolgusu",
+    before: "https://www.drhicranunlu.com/wp-content/uploads/2024/03/once1.jpg",
+    after: "https://www.drhicranunlu.com/wp-content/uploads/2024/03/sonra.jpg"
+  },
+  kirisiklik: {
+    title: "Cilt Kırışıklıklarına Son",
+    before: "https://www.drhicranunlu.com/wp-content/uploads/2018/11/03_before.jpg",
+    after: "https://www.drhicranunlu.com/wp-content/uploads/2018/11/03_after.jpg"
+  },
+  leke: {
+    title: "Cilt Lekelerine Son",
+    before: "https://www.drhicranunlu.com/wp-content/uploads/2024/03/oncesi.jpg",
+    after: "https://www.drhicranunlu.com/wp-content/uploads/2024/03/sonra2.jpg"
+  }
+};
+
 const serviceGrid = document.querySelector("#serviceGrid");
 const serviceMore = document.querySelector("#serviceMore");
 const showMoreServices = document.querySelector("#showMoreServices");
 const detail = document.querySelector("#serviceDetail");
+const comparisonTabs = document.querySelectorAll(".before-after-tab");
+const comparisonRange = document.querySelector("#comparisonRange");
+const comparisonBeforeWrap = document.querySelector("#comparisonBeforeWrap");
+const comparisonBefore = document.querySelector("#comparisonBefore");
+const comparisonAfter = document.querySelector("#comparisonAfter");
+const comparisonHandle = document.querySelector("#comparisonHandle");
+const comparisonCaption = document.querySelector("#comparisonCaption");
 const filterButtons = document.querySelectorAll(".filter-button");
 const navToggle = document.querySelector(".nav-toggle");
 const header = document.querySelector(".site-header");
@@ -186,6 +211,7 @@ let activeFilter = "all";
 let activeService = services[0].id;
 let servicesExpanded = false;
 let heroServicesExpanded = false;
+let activeComparison = "dudak-dolgusu";
 const initialServiceLimit = 5;
 
 function icon(name) {
@@ -259,6 +285,26 @@ function setActiveService(id, shouldScroll = false) {
   }
 }
 
+function setComparisonPosition(value) {
+  comparisonBeforeWrap.style.clipPath = `inset(0 ${100 - value}% 0 0)`;
+  comparisonHandle.style.left = `${value}%`;
+}
+
+function setActiveComparison(id) {
+  const comparison = comparisons[id] || comparisons["dudak-dolgusu"];
+  activeComparison = id;
+  comparisonBefore.src = comparison.before;
+  comparisonAfter.src = comparison.after;
+  comparisonBefore.alt = `${comparison.title} öncesi`;
+  comparisonAfter.alt = `${comparison.title} sonrası`;
+  comparisonCaption.textContent = comparison.title;
+  comparisonRange.value = 50;
+  setComparisonPosition(50);
+  comparisonTabs.forEach((tab) => {
+    tab.classList.toggle("active", tab.dataset.comparison === activeComparison);
+  });
+}
+
 function refreshIcons() {
   if (window.lucide) {
     window.lucide.createIcons();
@@ -288,6 +334,16 @@ showMoreHeroServices.addEventListener("click", () => {
     item.hidden = !heroServicesExpanded;
   });
   refreshIcons();
+});
+
+comparisonTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    setActiveComparison(tab.dataset.comparison);
+  });
+});
+
+comparisonRange.addEventListener("input", () => {
+  setComparisonPosition(Number(comparisonRange.value));
 });
 
 serviceLinks.forEach((button) => {
@@ -355,4 +411,5 @@ document.querySelectorAll("[data-count]").forEach((element) => statObserver.obse
 
 renderServices();
 setActiveService(activeService);
+setActiveComparison(activeComparison);
 window.addEventListener("load", refreshIcons);
