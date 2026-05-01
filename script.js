@@ -47,7 +47,7 @@ const services = [
     summary: "İstenmeyen tüylerin kalıcı olarak azaltılmasını hedefleyen ışık enerjisi uygulaması.",
     detail: [
       "Lazer epilasyon, kıl köklerine odaklanan yoğun ışık enerjisiyle istenmeyen tüylerin azalmasını hedefler.",
-      "Seans aralıkları kıl ve cilt yapısına göre planlanır; mevcut site bilgisinde ortalama 5-6 seans sonunda istenen sonuçlara yaklaşılabildiği belirtilir."
+      "Seans aralıkları kıl ve cilt yapısına göre planlanır; ortalama birkaç seanslık programla istenen sonuçlara yaklaşılması hedeflenir."
     ],
     highlights: ["Kişiye göre seans planı", "Hızlı uygulama alanları", "Uzun süreli pürüzsüzlük hedefi"]
   },
@@ -72,7 +72,7 @@ const services = [
     image: "https://www.drhicranunlu.com/wp-content/uploads/2018/11/surgery_slide_02-1.png",
     summary: "Yüzdeki ince çizgiler ve aşırı aktif kas hareketleri için değerlendirilen uygulamalar.",
     detail: [
-      "Mevcut sitede medikal estetik, botulinum toksini temelli uygulamalarla anlatılır; bu yaklaşım belirli kas hareketlerini geçici olarak azaltmayı hedefler.",
+      "Medikal estetik uygulamalarında botulinum toksini temelli yaklaşımlar, belirli kas hareketlerini geçici olarak azaltmayı hedefler.",
       "Uygulama, yüzdeki ince çizgiler ve bazı medikal kullanım alanları için doktor değerlendirmesiyle planlanır."
     ],
     highlights: ["İnce çizgi görünümü", "Kas hareketlerinin dengelenmesi", "Doktor kontrolünde planlama"]
