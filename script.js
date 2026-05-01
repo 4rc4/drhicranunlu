@@ -213,6 +213,8 @@ let activeService = services[0].id;
 let servicesExpanded = false;
 let heroServicesExpanded = false;
 let activeComparison = "dudak-dolgusu";
+let serviceDetailTimer;
+let lastScrollY = window.scrollY;
 const initialServiceLimit = 5;
 
 function icon(name) {
@@ -256,6 +258,14 @@ function renderServices() {
   refreshIcons();
 }
 
+function refreshServicesWithTransition() {
+  serviceGrid.classList.add("is-filtering");
+  window.setTimeout(() => {
+    renderServices();
+    window.requestAnimationFrame(() => serviceGrid.classList.remove("is-filtering"));
+  }, 160);
+}
+
 function renderDetail(service) {
   detail.innerHTML = `
     <img src="${service.image}" alt="${service.title}" loading="lazy">
@@ -279,11 +289,24 @@ function renderDetail(service) {
 function setActiveService(id, shouldScroll = false) {
   const service = services.find((item) => item.id === id) || services[0];
   activeService = service.id;
-  renderDetail(service);
+  window.clearTimeout(serviceDetailTimer);
 
-  if (shouldScroll) {
-    detail.scrollIntoView({ behavior: "smooth", block: "start" });
+  const updateDetail = () => {
+    renderDetail(service);
+    window.requestAnimationFrame(() => detail.classList.remove("switching"));
+
+    if (shouldScroll) {
+      detail.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  if (detail.children.length) {
+    detail.classList.add("switching");
+    serviceDetailTimer = window.setTimeout(updateDetail, 160);
+    return;
   }
+
+  updateDetail();
 }
 
 function setComparisonPosition(value) {
@@ -321,13 +344,16 @@ filterButtons.forEach((button) => {
     activeFilter = button.dataset.filter;
     servicesExpanded = false;
     filterButtons.forEach((item) => item.classList.toggle("active", item === button));
-    renderServices();
+    button.classList.remove("active");
+    void button.offsetWidth;
+    button.classList.add("active");
+    refreshServicesWithTransition();
   });
 });
 
 showMoreServices.addEventListener("click", () => {
   servicesExpanded = !servicesExpanded;
-  renderServices();
+  refreshServicesWithTransition();
 });
 
 showMoreHeroServices.addEventListener("click", () => {
@@ -360,6 +386,8 @@ serviceLinks.forEach((button) => {
 
 navToggle.addEventListener("click", () => {
   const isOpen = document.body.classList.toggle("nav-open");
+  header.classList.remove("is-hidden");
+  lastScrollY = window.scrollY;
   navToggle.setAttribute("aria-expanded", String(isOpen));
   navToggle.setAttribute("aria-label", isOpen ? "Menüyü kapat" : "Menüyü aç");
 });
@@ -373,10 +401,24 @@ document.querySelectorAll(".nav-links a").forEach((link) => {
 });
 
 function updateScrollProgress() {
+  const currentScroll = window.scrollY;
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+  const progress = scrollable > 0 ? currentScroll / scrollable : 0;
   document.body.style.setProperty("--scroll-progress", String(Math.min(1, Math.max(0, progress))));
-  header.classList.toggle("scrolled", window.scrollY > 20);
+  header.classList.toggle("scrolled", currentScroll > 20);
+
+  const delta = currentScroll - lastScrollY;
+  if (document.body.classList.contains("nav-open") || currentScroll < 80) {
+    header.classList.remove("is-hidden");
+  } else if (delta > 6 && currentScroll > 140) {
+    header.classList.add("is-hidden");
+  } else if (delta < -6) {
+    header.classList.remove("is-hidden");
+  }
+
+  if (Math.abs(delta) > 6 || currentScroll < 2) {
+    lastScrollY = currentScroll;
+  }
 }
 
 window.addEventListener("scroll", updateScrollProgress, { passive: true });
