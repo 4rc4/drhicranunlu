@@ -171,6 +171,8 @@ const services = [
 ];
 
 const serviceGrid = document.querySelector("#serviceGrid");
+const serviceMore = document.querySelector("#serviceMore");
+const showMoreServices = document.querySelector("#showMoreServices");
 const detail = document.querySelector("#serviceDetail");
 const filterButtons = document.querySelectorAll(".filter-button");
 const navToggle = document.querySelector(".nav-toggle");
@@ -179,6 +181,8 @@ const serviceLinks = document.querySelectorAll("[data-service-link]");
 
 let activeFilter = "all";
 let activeService = services[0].id;
+let servicesExpanded = false;
+const initialServiceLimit = 5;
 
 function icon(name) {
   return `<i data-lucide="${name}"></i>`;
@@ -186,11 +190,13 @@ function icon(name) {
 
 function renderServices() {
   const filtered = services.filter((service) => activeFilter === "all" || service.category === activeFilter);
+  const canExpand = filtered.length > initialServiceLimit;
+  const visibleServices = servicesExpanded || !canExpand ? filtered : filtered.slice(0, initialServiceLimit);
 
-  serviceGrid.innerHTML = filtered
+  serviceGrid.innerHTML = visibleServices
     .map(
-      (service) => `
-        <article class="service-card reveal visible" data-category="${service.category}">
+      (service, index) => `
+        <article class="service-card reveal visible${servicesExpanded && index >= initialServiceLimit ? " extra-card" : ""}" data-category="${service.category}">
           <img src="${service.image}" alt="${service.title}" loading="lazy">
           <div class="service-card-body">
             <span class="tag">${service.tag}</span>
@@ -205,6 +211,10 @@ function renderServices() {
       `
     )
     .join("");
+
+  serviceMore.hidden = !canExpand;
+  showMoreServices.setAttribute("aria-expanded", String(servicesExpanded));
+  showMoreServices.querySelector("span").textContent = servicesExpanded ? "Daha az göster" : "Daha fazlasını gör";
 
   serviceGrid.querySelectorAll("[data-service]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -254,9 +264,15 @@ function refreshIcons() {
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => {
     activeFilter = button.dataset.filter;
+    servicesExpanded = false;
     filterButtons.forEach((item) => item.classList.toggle("active", item === button));
     renderServices();
   });
+});
+
+showMoreServices.addEventListener("click", () => {
+  servicesExpanded = !servicesExpanded;
+  renderServices();
 });
 
 serviceLinks.forEach((button) => {
