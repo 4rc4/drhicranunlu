@@ -199,6 +199,7 @@ const comparisonBefore = document.querySelector("#comparisonBefore");
 const comparisonAfter = document.querySelector("#comparisonAfter");
 const comparisonHandle = document.querySelector("#comparisonHandle");
 const comparisonCaption = document.querySelector("#comparisonCaption");
+const comparisonSlider = document.querySelector("#comparisonSlider");
 const filterButtons = document.querySelectorAll(".filter-button");
 const navToggle = document.querySelector(".nav-toggle");
 const header = document.querySelector(".site-header");
@@ -293,6 +294,9 @@ function setComparisonPosition(value) {
 function setActiveComparison(id) {
   const comparison = comparisons[id] || comparisons["dudak-dolgusu"];
   activeComparison = id;
+  comparisonSlider.classList.remove("is-switching");
+  void comparisonSlider.offsetWidth;
+  comparisonSlider.classList.add("is-switching");
   comparisonBefore.src = comparison.before;
   comparisonAfter.src = comparison.after;
   comparisonBefore.alt = `${comparison.title} öncesi`;
@@ -303,6 +307,7 @@ function setActiveComparison(id) {
   comparisonTabs.forEach((tab) => {
     tab.classList.toggle("active", tab.dataset.comparison === activeComparison);
   });
+  window.setTimeout(() => comparisonSlider.classList.remove("is-switching"), 420);
 }
 
 function refreshIcons() {
@@ -367,9 +372,14 @@ document.querySelectorAll(".nav-links a").forEach((link) => {
   });
 });
 
-window.addEventListener("scroll", () => {
+function updateScrollProgress() {
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+  document.body.style.setProperty("--scroll-progress", String(Math.min(1, Math.max(0, progress))));
   header.classList.toggle("scrolled", window.scrollY > 20);
-});
+}
+
+window.addEventListener("scroll", updateScrollProgress, { passive: true });
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -412,4 +422,5 @@ document.querySelectorAll("[data-count]").forEach((element) => statObserver.obse
 renderServices();
 setActiveService(activeService);
 setActiveComparison(activeComparison);
+updateScrollProgress();
 window.addEventListener("load", refreshIcons);
