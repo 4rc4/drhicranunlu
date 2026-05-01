@@ -173,13 +173,13 @@ const services = [
 const comparisons = {
   "dudak-dolgusu": {
     title: "Dudak Dolgusu",
-    before: "https://www.drhicranunlu.com/wp-content/uploads/2024/03/once1.jpg",
-    after: "https://www.drhicranunlu.com/wp-content/uploads/2024/03/sonra.jpg"
+    before: "https://www.drhicranunlu.com/wp-content/uploads/2018/11/03_before.jpg",
+    after: "https://www.drhicranunlu.com/wp-content/uploads/2018/11/03_after.jpg"
   },
   kirisiklik: {
     title: "Cilt Kırışıklıklarına Son",
-    before: "https://www.drhicranunlu.com/wp-content/uploads/2018/11/03_before.jpg",
-    after: "https://www.drhicranunlu.com/wp-content/uploads/2018/11/03_after.jpg"
+    before: "https://www.drhicranunlu.com/wp-content/uploads/2024/03/once1.jpg",
+    after: "https://www.drhicranunlu.com/wp-content/uploads/2024/03/sonra.jpg"
   },
   leke: {
     title: "Cilt Lekelerine Son",
