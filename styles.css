@@ -318,9 +318,9 @@ h3 {
 
 .hero-services {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1px;
-  width: min(940px, 100%);
+  width: min(1040px, 100%);
   margin-top: 56px;
   background: rgba(255, 255, 255, 0.28);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -344,11 +344,35 @@ h3 {
   background: rgba(255, 255, 255, 0.22);
 }
 
+.hero-service-extra {
+  animation: serviceExpand 520ms ease both;
+}
+
 .hero-services span {
   display: block;
   margin-bottom: 8px;
   color: #f6c5b7;
   font-weight: 900;
+}
+
+.hero-more {
+  display: flex;
+  width: min(1040px, 100%);
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.hero-more .button {
+  min-width: 240px;
+  cursor: pointer;
+}
+
+.hero-more svg {
+  transition: transform 220ms ease;
+}
+
+.hero-more .button[aria-expanded="true"] svg {
+  transform: rotate(180deg);
 }
 
 .section {
@@ -967,7 +991,8 @@ h3 {
   }
 
   .hero-content,
-  .hero-services {
+  .hero-services,
+  .hero-more {
     max-width: 354px;
   }
 

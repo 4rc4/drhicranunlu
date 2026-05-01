@@ -178,10 +178,14 @@ const filterButtons = document.querySelectorAll(".filter-button");
 const navToggle = document.querySelector(".nav-toggle");
 const header = document.querySelector(".site-header");
 const serviceLinks = document.querySelectorAll("[data-service-link]");
+const heroServiceExtras = document.querySelectorAll(".hero-service-extra");
+const showMoreHeroServices = document.querySelector("#showMoreHeroServices");
+const heroServices = document.querySelector(".hero-services");
 
 let activeFilter = "all";
 let activeService = services[0].id;
 let servicesExpanded = false;
+let heroServicesExpanded = false;
 const initialServiceLimit = 5;
 
 function icon(name) {
@@ -273,6 +277,17 @@ filterButtons.forEach((button) => {
 showMoreServices.addEventListener("click", () => {
   servicesExpanded = !servicesExpanded;
   renderServices();
+});
+
+showMoreHeroServices.addEventListener("click", () => {
+  heroServicesExpanded = !heroServicesExpanded;
+  heroServices.classList.toggle("expanded", heroServicesExpanded);
+  showMoreHeroServices.setAttribute("aria-expanded", String(heroServicesExpanded));
+  showMoreHeroServices.querySelector("span").textContent = heroServicesExpanded ? "Daha az göster" : "Daha fazlasını gör";
+  heroServiceExtras.forEach((item) => {
+    item.hidden = !heroServicesExpanded;
+  });
+  refreshIcons();
 });
 
 serviceLinks.forEach((button) => {
