@@ -187,11 +187,12 @@ body.nav-open .site-header {
 
 .nav-cta {
   justify-content: center;
-  min-height: 42px;
-  padding: 0 16px;
+  min-height: 48px;
+  padding: 0 20px;
   background: var(--teal);
   color: var(--white);
   border-radius: 6px;
+  font-size: 0.98rem;
   font-weight: 700;
   box-shadow: 0 12px 24px rgba(18, 115, 107, 0.22);
 }
@@ -389,6 +390,18 @@ h3 {
   background: var(--coral);
   color: var(--white);
   box-shadow: 0 14px 28px rgba(212, 107, 84, 0.26);
+}
+
+.hero-actions .button {
+  min-height: 58px;
+  padding: 0 28px;
+  font-size: 1.05rem;
+}
+
+.hero-actions .button svg {
+  width: 20px;
+  height: 20px;
+  flex-basis: 20px;
 }
 
 .button.secondary {
@@ -1496,7 +1509,12 @@ h3 {
   .hero-actions,
   .contact-actions {
     display: grid;
-    width: min(100%, 300px);
+    width: min(100%, 330px);
+  }
+
+  .hero-actions .button {
+    min-height: 62px;
+    padding: 0 24px;
   }
 
   .button {
